@@ -10,8 +10,6 @@ import { generateCells } from '../utils';
 const App: React.FC = () => {
   const [cells, setCells] = useState(generateCells());
 
-  console.log(cells)
-
   const renderCells = (): React.ReactNode => {
     return cells.map((row, rowIndex) =>
       row.map((cell, colIndex) => (
@@ -43,7 +41,7 @@ const App: React.FC = () => {
 };
 
 const GameBox = styled(Container)`
-  padding: 15px;  
+  padding: 16px;  
   background: ${({ theme }) => theme.colors.lightGrey};
   border-right-color: ${({ theme }) => theme.colors.shadowGrey};
   border-bottom-color: ${({ theme }) => theme.colors.shadowGrey};
