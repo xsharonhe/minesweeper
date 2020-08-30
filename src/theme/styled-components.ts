@@ -5,7 +5,9 @@ interface ThemeInterface {
         white: string,
         lightGrey: string,
         shadowGrey: string,
-        darkGrey: string
+        darkGrey: string,
+        red: string,
+        black: string
     }
 };
 
