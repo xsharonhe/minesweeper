@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
 import { MinesweeperTheme } from '../theme/theme';
-import Container from './Container';
+import { Container, ShadowContainer } from './Container';
 import NumberDisplay from './NumberDisplay';
+import Cell from './Cells';
+import { generateCells } from '../utils';
 
 const App: React.FC = () => {
+  const [cells, setCells] = useState(generateCells());
+
+  console.log(cells)
+
+  const renderCells = (): React.ReactNode => {
+    return cells.map((row, rowIndex) =>
+      row.map((cell, colIndex) => (
+        <Cell
+          key={`${rowIndex}-${colIndex}`}
+        />
+      ))
+    );
+  };
+
   return (
     <ThemeProvider theme={ MinesweeperTheme }>
       <GameBox>
@@ -19,7 +35,7 @@ const App: React.FC = () => {
           <NumberDisplay score={23}/>
         </Header>
         <Body>
-          There
+          { renderCells() }
         </Body>
       </GameBox>
     </ThemeProvider>
@@ -27,7 +43,7 @@ const App: React.FC = () => {
 };
 
 const GameBox = styled(Container)`
-  padding: 16px;  
+  padding: 15px;  
   background: ${({ theme }) => theme.colors.lightGrey};
   border-right-color: ${({ theme }) => theme.colors.shadowGrey};
   border-bottom-color: ${({ theme }) => theme.colors.shadowGrey};
@@ -39,39 +55,27 @@ const GameBox = styled(Container)`
   align-items: center;
 `;
 
-const Header = styled(Container)`
+const Header = styled(ShadowContainer)`
   padding: 10px 12px;
   width: 50vw;
   background:${({ theme }) => theme.colors.lightGrey};
-  border-right-color: ${({ theme }) => theme.colors.white};
-  border-bottom-color: ${({ theme }) => theme.colors.white};
-  border-left-color: ${({ theme }) => theme.colors.darkGrey};
-  border-top-color: ${({ theme }) => theme.colors.darkGrey};
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const FaceBox = styled(Container)`
+const FaceBox = styled(ShadowContainer)`
   width: 52px;
   height: 52px;
   font-size: 35px;
-  border-right-color: ${({ theme }) => theme.colors.white};
-  border-bottom-color: ${({ theme }) => theme.colors.white};
-  border-left-color: ${({ theme }) => theme.colors.darkGrey};
-  border-top-color: ${({ theme }) => theme.colors.darkGrey};
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 `;
 
-const Body = styled(Container)`
+const Body = styled(ShadowContainer)`
   margin-top: 16px;
-  border-right-color: ${({ theme }) => theme.colors.white};
-  border-bottom-color: ${({ theme }) => theme.colors.white};
-  border-left-color: ${({ theme }) => theme.colors.darkGrey};
-  border-top-color: ${({ theme }) => theme.colors.darkGrey};
   display: grid;
   grid-template-rows: repeat(9, 1fr);
   grid-template-columns: repeat(9, 1fr);
