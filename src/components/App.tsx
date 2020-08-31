@@ -5,7 +5,10 @@ import { MinesweeperTheme } from '../theme/theme';
 import { Container, ShadowContainer } from './Container';
 import NumberDisplay from './NumberDisplay';
 import Cell from './Cells';
-import { generateCells } from '../utils';
+import { 
+  generateCells,
+  CellStates 
+} from '../utils';
 
 const App: React.FC = () => {
   const [cells, setCells] = useState(generateCells());
@@ -15,6 +18,11 @@ const App: React.FC = () => {
       row.map((cell, colIndex) => (
         <Cell
           key={`${rowIndex}-${colIndex}`}
+          row={ rowIndex }
+          col={ colIndex }
+          state={ cell.state }
+          value = { cell.value }
+          isUntouched={ cell.state === CellStates.Untouched ? 'untouched' : ''}
         />
       ))
     );

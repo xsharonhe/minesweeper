@@ -4,7 +4,7 @@ import {
     NO_OF_BOMBS 
 } from '../constants/index';
 
-enum CellValues {
+export enum CellValues {
     None,
     One,
     Two,
@@ -17,13 +17,13 @@ enum CellValues {
     Bomb
 };
 
-enum CellStates {
+export enum CellStates {
     Untouched,
     Visible,
     Flagged
 }
 
-type CellTypes = {
+export type CellTypes = {
     value: CellValues
     state: CellStates
 }
