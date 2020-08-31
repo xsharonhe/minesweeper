@@ -70,6 +70,13 @@ const FaceBox = styled(ShadowContainer)`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  &:active {
+        border-right-color: ${({ theme }) => theme.colors.darkGrey};
+        border-bottom-color: ${({ theme }) => theme.colors.darkGrey};
+        border-left-color: ${({ theme }) => theme.colors.white};
+        border-top-color: ${({ theme }) => theme.colors.white};
+  }
 `;
 
 const Body = styled(ShadowContainer)`

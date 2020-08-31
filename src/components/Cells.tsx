@@ -18,6 +18,10 @@ const StyledCell = styled(ShadowContainer)`
         border-left-color: ${({ theme }) => theme.colors.white};
         border-top-color: ${({ theme }) => theme.colors.white};
     }
+
+    &:hover {
+        transform: scale(1.1);
+    }
 `;
 
 export default Cell;

@@ -1,7 +1,10 @@
-import { MAX_COLS, MAX_ROWS } from '../constants/index';
+import { 
+    MAX_COLS, 
+    MAX_ROWS,
+    NO_OF_BOMBS 
+} from '../constants/index';
 
 enum CellValues {
-    Bomb,
     None,
     One,
     Two,
@@ -10,7 +13,8 @@ enum CellValues {
     Five,
     Six,
     Seven,
-    Eight
+    Eight,
+    Bomb
 };
 
 enum CellStates {
@@ -24,8 +28,12 @@ type CellTypes = {
     state: CellStates
 }
 
-export const generateCells = () => {
-    const cells: CellTypes[][] = [];
+function randInt(int: number): number {
+    return Math.floor(Math.random() * int);
+};
+
+export const generateCells = (): CellTypes[][] => {
+    let cells: CellTypes[][] = [];
 
     for (let row = 0; row < MAX_ROWS; row++) {
         cells.push([]);
@@ -34,6 +42,31 @@ export const generateCells = () => {
                 value: CellValues.None,
                 state: CellStates.Untouched
             });
+        }
+    }
+
+    let bombsPlaced = 0;
+    while (bombsPlaced < NO_OF_BOMBS) {
+        const randomRow = randInt(MAX_ROWS);
+        const randomCol = randInt(MAX_COLS);
+
+        let selectedCell = cells[randomRow][randomCol];
+
+        if (selectedCell.value !== CellValues.Bomb) {
+            cells = cells.map((row, rowIndex) => 
+                row.map((cell, colIndex) => {
+                    if (randomRow === rowIndex && randomCol === colIndex) {
+                        return {
+                        ...cell,
+                        value: CellValues.Bomb
+                        };
+                    }
+
+                    return cell;
+                })
+            );
+
+            bombsPlaced++;
         }
     }
 
