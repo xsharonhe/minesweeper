@@ -12,9 +12,17 @@ interface CellProps {
     state: CellStates;
     value: CellValues;
     isUntouched: string;
+    isOne: boolean;
+    isTwo: boolean;
+    isThree: boolean;
+    isFour: boolean;
+    isFive: boolean;
+    isSix: boolean;
+    isSeven: boolean;
+    isEight: boolean;
 };
 
-const Cell: React.FC<CellProps> = ({ row, col, state, value, isUntouched }) => {
+const Cell: React.FC<CellProps> = ({ row, col, state, value, isUntouched, isOne }) => {
     const renderContents = (): React.ReactNode => {
         if (state === CellStates.Untouched) {
             if (value === CellValues.Bomb) {
@@ -23,13 +31,17 @@ const Cell: React.FC<CellProps> = ({ row, col, state, value, isUntouched }) => {
                         💣
                     </span>
                 );
+            } else if (value === CellValues.None) {
+                return null;
             }
+
+            return value;
         } else if (state === CellStates.Flagged) {
             return (
-                <span role='img' aria-label='flag'>
+                <span role='img' aria-label='bomb'>
                     ⛳
                 </span>
-            )
+            ) 
         }
         
         return null;
@@ -42,7 +54,7 @@ const Cell: React.FC<CellProps> = ({ row, col, state, value, isUntouched }) => {
     );
 };
 
-const StyledCell = styled(ShadowContainer)`
+const StyledCell = styled<any>(ShadowContainer)<CellProps>`
     width: 30px;
     height: 30px;
     display: flex;
@@ -60,9 +72,17 @@ const StyledCell = styled(ShadowContainer)`
         transform: scale(1.1);
     }
 
-    &:untouched {
+    border-color: ${(props) => (props.isUntouched ? '#7b7b7b' : '')};
+    border-width: ${(props) => (props.isUntouched ? '1px' : '')};
 
-    }
+    color: ${(props) => (props.isOne ? 'blue' : '')};
+    color: ${(props) => (props.isOne ? 'green' : '')};
+    color: ${(props) => (props.isOne ? 'red' : '')};
+    color: ${(props) => (props.isOne ? 'purple' : '')};
+    color: ${(props) => (props.isOne ? 'maroon' : '')};
+    color: ${(props) => (props.isOne ? 'turquoise' : '')};
+    color: ${(props) => (props.isOne ? 'black' : '')};
+    color: ${(props) => (props.isOne ? 'gray' : '')};
 `;
 
 export default Cell;

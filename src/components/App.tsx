@@ -21,8 +21,16 @@ const App: React.FC = () => {
           row={ rowIndex }
           col={ colIndex }
           state={ cell.state }
-          value = { cell.value }
+          value={ cell.value }
           isUntouched={ cell.state === CellStates.Untouched ? 'untouched' : ''}
+          isOne={ (cell.value === 1) ? true: false}
+          isTwo={ (cell.value === 2) ? true : false}
+          isThree={ (cell.value === 3) ? true: false}
+          isFour={ (cell.value === 4) ? true : false}
+          isFive={ (cell.value === 5) ? true: false}
+          isSix={ (cell.value === 6) ? true : false}
+          isSeven={ (cell.value === 7) ? true: false}
+          isEight={ (cell.value === 8) ? true : false}
         />
       ))
     );

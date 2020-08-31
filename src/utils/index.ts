@@ -70,5 +70,60 @@ export const generateCells = (): CellTypes[][] => {
         }
     }
 
+    for (let rowIndex = 0; rowIndex < MAX_ROWS; rowIndex++) {
+        for (let colIndex = 0; colIndex < MAX_COLS; colIndex++) {
+            const currentCell = cells[rowIndex][colIndex];
+
+            if (currentCell.value === CellValues.Bomb) {
+                continue;
+            }
+
+            let borderBombs = 0;
+
+            const topLeftBomb = rowIndex > 0 && colIndex > 0 ? cells[rowIndex - 1][colIndex - 1] : null;
+            const topBomb = rowIndex > 0 ? cells[rowIndex - 1][colIndex] : null;
+            const topRightBomb = rowIndex > 0 && colIndex < MAX_COLS - 1 ? cells[rowIndex - 1][colIndex + 1] : null;
+            const leftBomb = colIndex > 0 ? cells[rowIndex][colIndex - 1] : null;
+            const rightBomb = colIndex < MAX_COLS - 1 ? cells[rowIndex][colIndex + 1] : null;
+            const bottomLeftBomb = colIndex > 0 && rowIndex < MAX_ROWS - 1? cells[rowIndex + 1][colIndex - 1] : null;
+            const bottomBomb = rowIndex < MAX_ROWS - 1 ? cells[rowIndex + 1][colIndex] : null;
+            const bottomRightBomb = rowIndex < MAX_ROWS - 1 && colIndex < MAX_COLS -1 ? cells[rowIndex + 1][colIndex + 1] : null;
+
+            if (topLeftBomb && topLeftBomb.value === CellValues.Bomb) {
+                borderBombs++;
+            } 
+            if (topBomb && topBomb.value === CellValues.Bomb) {
+                borderBombs++;
+            }
+            if(topRightBomb && topRightBomb.value === CellValues.Bomb) {
+                borderBombs++;
+            }
+            if(leftBomb && leftBomb.value === CellValues.Bomb) {
+                borderBombs++;
+            }
+            if(rightBomb && rightBomb.value === CellValues.Bomb) {
+                borderBombs++;
+            }
+            if(bottomLeftBomb && bottomLeftBomb.value === CellValues.Bomb) {
+                borderBombs++;
+            }
+            if(bottomBomb && bottomBomb.value === CellValues.Bomb) {
+                borderBombs++;
+            }
+            if(bottomRightBomb && bottomRightBomb.value === CellValues.Bomb) {
+                borderBombs++;
+            }
+
+            if (borderBombs > 0) {
+                cells[rowIndex][colIndex] = {
+                    ...currentCell,
+                    value: borderBombs
+                }
+            }
+        }
+    }
+
+    console.log(cells)
+
     return cells;
 };
