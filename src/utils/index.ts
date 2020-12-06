@@ -28,7 +28,7 @@ export type CellTypes = {
     state: CellStates
 }
 
-function randInt(int: number): number {
+const randInt = (int: number): number => {
     return Math.floor(Math.random() * int);
 };
 
@@ -57,11 +57,10 @@ export const generateCells = (): CellTypes[][] => {
                 row.map((cell, colIndex) => {
                     if (randomRow === rowIndex && randomCol === colIndex) {
                         return {
-                        ...cell,
-                        value: CellValues.Bomb
+                            ...cell,
+                            value: CellValues.Bomb
                         };
                     }
-
                     return cell;
                 })
             );
@@ -122,8 +121,6 @@ export const generateCells = (): CellTypes[][] => {
             }
         }
     }
-
-    console.log(cells)
 
     return cells;
 };

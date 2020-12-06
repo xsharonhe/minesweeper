@@ -8,10 +8,11 @@ export const Container = styled.div`
 
 export const ShadowContainer = styled.div`
     font-family: 'Quicksand', sans-serif;
-    border-width: 4px;
-    border-style: solid;
-    border-right-color: ${({ theme }) => theme.colors.white};
-    border-bottom-color: ${({ theme }) => theme.colors.white};
-    border-left-color: ${({ theme }) => theme.colors.darkGrey};
-    border-top-color: ${({ theme }) => theme.colors.darkGrey};
+    border: 4px solid;
+    ${({ theme }): string => `
+        border-right-color: ${theme.colors.white};
+        border-bottom-color: ${theme.colors.white};
+        border-left-color: ${theme.colors.darkGrey};
+        border-top-color: ${theme.colors.darkGrey};
+    `};
 `;

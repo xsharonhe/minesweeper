@@ -1,28 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ShadowContainer } from './Container';
-import { 
-    CellStates, 
-    CellValues 
-} from '../utils';
+import { CellStates, CellValues } from '../utils';
 
 interface CellProps {
-    row: number;
-    col: number;
-    state: CellStates;
-    value: CellValues;
+    row?: number;
+    col?: number;
+    state?: CellStates;
+    value?: number;
     isUntouched: string;
-    isOne: boolean;
-    isTwo: boolean;
-    isThree: boolean;
-    isFour: boolean;
-    isFive: boolean;
-    isSix: boolean;
-    isSeven: boolean;
-    isEight: boolean;
 };
 
-const Cell: React.FC<CellProps> = ({ row, col, state, value, isUntouched, isOne }) => {
+const handleColor = (value: number) => {
+    switch(value) {
+        case 1: 
+            return 'blue';
+        case 2:
+            return 'green';
+        case 3: 
+            return 'red';
+        case 4: 
+            return 'purple';
+        case 5: 
+            return 'maroon';
+        default: 
+            return 'black';
+    }
+}
+
+const Cell: React.FC<CellProps> = ({ 
+    row, 
+    col, 
+    state, 
+    value, 
+    isUntouched,
+    ...props
+}) => {
     const renderContents = (): React.ReactNode => {
         if (state === CellStates.Untouched) {
             if (value === CellValues.Bomb) {
@@ -34,7 +47,6 @@ const Cell: React.FC<CellProps> = ({ row, col, state, value, isUntouched, isOne 
             } else if (value === CellValues.None) {
                 return null;
             }
-
             return value;
         } else if (state === CellStates.Flagged) {
             return (
@@ -43,13 +55,11 @@ const Cell: React.FC<CellProps> = ({ row, col, state, value, isUntouched, isOne 
                 </span>
             ) 
         }
-        
         return null;
     };
-
     return (
-        <StyledCell>
-            { renderContents() }
+        <StyledCell value={value} {...props}>
+            {renderContents()}
         </StyledCell>
     );
 };
@@ -61,28 +71,25 @@ const StyledCell = styled<any>(ShadowContainer)<CellProps>`
     justify-content: center;
     align-items: center;
 
-    &:active {
-        border-right-color: ${({ theme }) => theme.colors.darkGrey};
-        border-bottom-color: ${({ theme }) => theme.colors.darkGrey};
-        border-left-color: ${({ theme }) => theme.colors.white};
-        border-top-color: ${({ theme }) => theme.colors.white};
-    }
-
     &:hover {
         transform: scale(1.1);
     }
 
-    border-color: ${(props) => (props.isUntouched ? '#7b7b7b' : '')};
-    border-width: ${(props) => (props.isUntouched ? '1px' : '')};
+    ${({ theme, isUntouched }): string | undefined => isUntouched &&`
+        border-color: ${theme.colors.darkGray};
+        border-width: '1px';
 
-    color: ${(props) => (props.isOne ? 'blue' : '')};
-    color: ${(props) => (props.isOne ? 'green' : '')};
-    color: ${(props) => (props.isOne ? 'red' : '')};
-    color: ${(props) => (props.isOne ? 'purple' : '')};
-    color: ${(props) => (props.isOne ? 'maroon' : '')};
-    color: ${(props) => (props.isOne ? 'turquoise' : '')};
-    color: ${(props) => (props.isOne ? 'black' : '')};
-    color: ${(props) => (props.isOne ? 'gray' : '')};
+        &:active {
+            border-right-color: ${theme.colors.darkGrey};
+            border-bottom-color: ${theme.colors.darkGrey};
+            border-left-color: ${theme.colors.white};
+            border-top-color: ${theme.colors.white};
+        }
+    `};
+
+    ${({ theme, value }): string => `
+        color: ${handleColor(value)};
+    `};
 `;
 
 export default Cell;
